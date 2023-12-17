@@ -4,6 +4,8 @@ namespace Linked_List_Homework
 {
     public class Node
     {
+        internal int val;
+
         public int Data { get; set; }
         public Node Next { get; set; }
 
