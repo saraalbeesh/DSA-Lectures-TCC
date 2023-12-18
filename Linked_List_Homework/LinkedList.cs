@@ -29,19 +29,17 @@ namespace Linked_List_Homework
 
             Node newNode = new Node(val);
                 if(First==null)
-            {
-                First = newNode;    
-            }
-                else
-            {
-                Node current = First;
-                while (current.Next != null) 
-                { 
-                    current=current.Next;   
-
+                {
+                First = newNode;
+                return;
                 }
-
+                Node move=First;
+            while (move.Next != null)
+            {
+                move= move.Next;
             }
+            move.Next = newNode;
+               
 
 
         }
@@ -50,42 +48,63 @@ namespace Linked_List_Homework
             // TODO: search for the key and remove it from the list
             // consider when the key does not exist and when the list is empty
 
-            if(First==null)
+            Node temp = First, prev = null;
+            if (temp != null && temp.Data == key)
             {
+                First = temp.Next;
                 return;
             }
-            if(First.val==key) 
+            while (temp != null && temp.Data != key)
             {
-                First = First.Next;
+                prev = temp;
+                temp = temp.Next;
+            }
+            if (temp == null)
                 return;
-            }
-            Node current = First;
-            while (current.Next != null)
-            {
-                if(current.Next.val==key)
-                {
-                    current.Next=current.Next.Next;
-                    return;
-                }
-                current = current.Next;
-            }
-            
+            prev.Next = temp.Next;
         }
         public void Merge(LinkedList other_list)
         {
             // TODO: merge this list with the other list
-            if (First==null)
+            Node head1 = this.First;
+            Node head2 = other_list.First;
+            Node prev = null;
+            while(head1!=null&&head2!=null)
             {
-                First = other_list.First;
-                return;
+                if(head1.Data<=head2.Data)
+                {
+                    prev=head1;
+                    head1=head1.Next;
+                }
+                else
+                {
+                    Node next=head2.Next;
+                    if(prev!=null)
+                    {
+                        prev.Next = head2;
+                    }
+                    else
+                    {
+                        Node Next = head2.Next;
+                    }
+                    if(prev!=null)
+                    {
+                        prev.Next = head2;
+                    }
+                    else
+                    {
+                        this.First = head2;
+                    }
+                    head2.Next = head1;
+                    prev = head2;
+                    head2 = next;   
+                }
+            }
+            if(head1 == null&&prev!=null)
+            {
+                prev.Next = head2;
+            }
 
-            }
-            Node current = First;
-            while (current != null)
-            {
-                current=current.Next;   
-                current.Next= other_list.First;
-            }
         }
         public void Reverse()
         {
@@ -94,14 +113,13 @@ namespace Linked_List_Homework
 
             Node prev = null;
             Node current = First;
-            Node next = null;   
-            while (current != null) 
-            { 
-                next= current.Next; 
-                current.Next=prev;
+            Node next = null;
+            if (current != null)
+            {
+                next = current.Next;
+                current.Next= prev;
                 prev = current;
-                current= next;  
-
+                current = next;
             }
             First = prev;
         }
